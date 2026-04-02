@@ -8,10 +8,61 @@
 </head>
 <body>
     <main class="page-shell">
-        <section class="card">
-            <p class="eyebrow">Step 1</p>
-            <h1>ポモドーロタイマー</h1>
-            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+        <section class="card app-card">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Step 10</p>
+                    <h1>ポモドーロタイマー</h1>
+                    <p class="lead">設定を変更すると、タイマー初期値と次のモード判定へすぐ反映されます。</p>
+                </div>
+                <button id="open-settings-button" class="ghost-button" type="button">設定</button>
+            </div>
+
+            <section class="timer-panel" aria-label="タイマー情報">
+                <p class="mode-caption">現在のモード</p>
+                <p id="current-mode-text" class="mode-value">作業</p>
+                <p id="timer-display" class="timer-display">25:00</p>
+                <p id="cycle-display" class="cycle-display">完了サイクル: 0</p>
+            </section>
+
+            <div class="button-row">
+                <button class="mode-button" data-mode-button="work" type="button">作業</button>
+                <button class="mode-button" data-mode-button="short_break" type="button">短休憩</button>
+                <button class="mode-button" data-mode-button="long_break" type="button">長休憩</button>
+            </div>
+
+            <div class="button-row button-row-wide">
+                <button id="complete-session-button" class="primary-button" type="button">セッション完了で次へ</button>
+            </div>
+
+            <p id="settings-status" class="status-message" aria-live="polite"></p>
+
+            <section id="settings-panel" class="settings-panel" hidden>
+                <form id="settings-form">
+                    <div class="settings-grid">
+                        <label class="field">
+                            <span>作業時間 (分)</span>
+                            <input id="work_minutes" name="work_minutes" type="number" min="1" max="120" required>
+                        </label>
+                        <label class="field">
+                            <span>短休憩 (分)</span>
+                            <input id="short_break_minutes" name="short_break_minutes" type="number" min="1" max="60" required>
+                        </label>
+                        <label class="field">
+                            <span>長休憩 (分)</span>
+                            <input id="long_break_minutes" name="long_break_minutes" type="number" min="1" max="120" required>
+                        </label>
+                        <label class="field">
+                            <span>長休憩までの作業回数</span>
+                            <input id="cycles_before_long_break" name="cycles_before_long_break" type="number" min="1" max="12" required>
+                        </label>
+                    </div>
+                    <div class="button-row button-row-wide">
+                        <button class="primary-button" type="submit">保存</button>
+                        <button id="close-settings-button" class="ghost-button" type="button">閉じる</button>
+                    </div>
+                </form>
+            </section>
         </section>
     </main>
 
