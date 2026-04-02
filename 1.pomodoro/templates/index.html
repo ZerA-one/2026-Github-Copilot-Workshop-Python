@@ -8,10 +8,44 @@
 </head>
 <body>
     <main class="page-shell">
-        <section class="card">
-            <p class="eyebrow">Step 1</p>
-            <h1>ポモドーロタイマー</h1>
-            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+        <section class="timer-card" aria-label="ポモドーロタイマー">
+            <header class="card-header">
+                <h1>ポモドーロタイマー</h1>
+                <div class="window-actions" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </header>
+
+            <p class="mode-label">作業中</p>
+
+            <section class="timer-display" aria-label="タイマー表示">
+                <svg class="progress-ring" viewBox="0 0 220 220" role="img" aria-label="円形プログレス">
+                    <circle class="progress-ring__track" cx="110" cy="110" r="74"></circle>
+                    <circle class="progress-ring__value" cx="110" cy="110" r="74"></circle>
+                </svg>
+                <p class="time-value">25:00</p>
+            </section>
+
+            <div class="action-row">
+                <button type="button" class="button button--primary">開始</button>
+                <button type="button" class="button button--secondary">リセット</button>
+            </div>
+
+            <section class="stats-card" aria-label="今日の進捗">
+                <h2>今日の進捗</h2>
+                <div class="stats-grid">
+                    <article class="stat-item">
+                        <p class="stat-value">4</p>
+                        <p class="stat-label">完了</p>
+                    </article>
+                    <article class="stat-item">
+                        <p class="stat-value">1時間40分</p>
+                        <p class="stat-label">集中時間</p>
+                    </article>
+                </div>
+            </section>
         </section>
     </main>
 
