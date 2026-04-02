@@ -20,8 +20,15 @@
     return `${minutes}:${seconds}`;
   }
 
-  function formatFocusedMinutes(focusedSeconds) {
-    return `${Math.floor(focusedSeconds / 60)} 分`;
+  function formatFocusedDuration(focusedSeconds) {
+    const minutes = Math.floor(focusedSeconds / 60);
+    const seconds = focusedSeconds % 60;
+
+    if (seconds === 0) {
+      return `${minutes} 分`;
+    }
+
+    return `${minutes} 分 ${seconds} 秒`;
   }
 
   function render(state) {
@@ -37,7 +44,7 @@
     timerValue.textContent = formatSeconds(state.remainingSeconds);
     statusMessage.textContent = STATUS_MESSAGES[state.status] || STATUS_MESSAGES.idle;
     completedCount.textContent = String(state.stats.completed_count || 0);
-    focusedMinutes.textContent = formatFocusedMinutes(state.stats.focused_seconds || 0);
+    focusedMinutes.textContent = formatFocusedDuration(state.stats.focused_seconds || 0);
 
     startButton.textContent = state.status === "running" ? "一時停止" : state.status === "paused" ? "再開" : "開始";
     startButton.disabled = state.status === "loading" || state.status === "syncing";
