@@ -99,6 +99,22 @@ def test_post_settings_updates_in_memory_settings() -> None:
 	assert state_response.get_json()["timer"]["remaining_seconds"] == 1800
 
 
+def test_post_settings_rejects_invalid_json_payload() -> None:
+	app = create_app()
+	client = app.test_client()
+
+	response = client.post(
+		"/api/settings",
+		data="{invalid",
+		content_type="application/json",
+	)
+
+	assert response.status_code == 400
+	assert response.get_json() == {
+		"message": "Request body must be valid JSON.",
+	}
+
+
 def test_post_session_complete_updates_today_stats() -> None:
 	app = create_app()
 	client = app.test_client()
@@ -115,6 +131,21 @@ def test_post_session_complete_updates_today_stats() -> None:
 			"completed_count": 1,
 			"focused_seconds": 900,
 		},
+	}
+
+
+def test_post_session_complete_rejects_non_object_json_payload() -> None:
+	app = create_app()
+	client = app.test_client()
+
+	response = client.post(
+		"/api/session/complete",
+		json=["not", "an", "object"],
+	)
+
+	assert response.status_code == 400
+	assert response.get_json() == {
+		"message": "Request body must be a JSON object.",
 	}
 
 
@@ -138,7 +169,7 @@ def test_post_session_reset_clears_today_stats_and_timer() -> None:
 		"timer": {
 			"status": "idle",
 			"mode": "work",
-			"remaining_seconds": 1500,
+			"remaining_seconds": 1800,
 		},
 		"today_stats": {
 			"completed_count": 0,
