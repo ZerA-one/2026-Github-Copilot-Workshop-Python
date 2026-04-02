@@ -34,7 +34,7 @@
         deadline = now() + (remainingSeconds * 1000);
         status = "running";
         onTick(remainingSeconds);
-        intervalId = window.setInterval(tick, 250);
+        intervalId = window.setInterval(tick, 1000);
         return Promise.resolve();
       },
       pause() {

@@ -46,7 +46,14 @@
     completedCount.textContent = String(state.stats.completed_count || 0);
     focusedMinutes.textContent = formatFocusedDuration(state.stats.focused_seconds || 0);
 
-    startButton.textContent = state.status === "running" ? "一時停止" : state.status === "paused" ? "再開" : "開始";
+    let startButtonLabel = "開始";
+    if (state.status === "running") {
+      startButtonLabel = "一時停止";
+    } else if (state.status === "paused") {
+      startButtonLabel = "再開";
+    }
+
+    startButton.textContent = startButtonLabel;
     startButton.disabled = state.status === "loading" || state.status === "syncing";
     resetButton.disabled = state.status === "loading" || state.status === "syncing";
   }
