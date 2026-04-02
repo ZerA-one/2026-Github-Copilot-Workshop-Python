@@ -8,10 +8,51 @@
 </head>
 <body>
     <main class="page-shell">
-        <section class="card">
-            <p class="eyebrow">Step 1</p>
-            <h1>ポモドーロタイマー</h1>
-            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+        <section class="card" id="app-card">
+            <header class="card-header">
+                <h1>ポモドーロタイマー</h1>
+                <div class="window-controls" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </header>
+
+            <p class="mode-label" id="mode-label">作業中</p>
+
+            <section class="timer-panel" aria-label="タイマー">
+                <div class="timer-ring">
+                    <svg viewBox="0 0 260 260" role="img" aria-label="進捗リング">
+                        <circle class="ring-track" cx="130" cy="130" r="92"></circle>
+                        <circle class="ring-progress" id="ring-progress" cx="130" cy="130" r="92"></circle>
+                    </svg>
+                    <p class="timer-display" id="timer-display">25:00</p>
+                </div>
+            </section>
+
+            <div class="button-row">
+                <button type="button" class="button button-primary" id="primary-action">開始</button>
+                <button type="button" class="button button-secondary" id="reset-action">リセット</button>
+            </div>
+
+            <div class="feedback-panel">
+                <p class="status-message" id="status-message" aria-live="polite">読み込み中...</p>
+                <p class="error-message" id="error-message" aria-live="assertive" hidden></p>
+            </div>
+
+            <section class="stats-card" aria-label="今日の進捗">
+                <h2>今日の進捗</h2>
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <p class="stat-value" id="completed-count">0</p>
+                        <p class="stat-label">完了</p>
+                    </div>
+                    <div class="stat-block">
+                        <p class="stat-value" id="focused-time">0分</p>
+                        <p class="stat-label">集中時間</p>
+                    </div>
+                </div>
+            </section>
         </section>
     </main>
 
