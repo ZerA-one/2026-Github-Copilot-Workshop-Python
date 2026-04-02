@@ -27,7 +27,9 @@
                 return remainingMs
             }
 
-            return Math.max(0, durationMs - (now() - startedAt))
+            const elapsedMs = Math.max(0, now() - startedAt)
+
+            return Math.max(0, durationMs - elapsedMs)
         }
 
         function getState() {
@@ -108,7 +110,9 @@
                 return getState()
             }
 
-            startedAt = now() - (durationMs - remainingMs)
+            const elapsedMs = durationMs - remainingMs
+
+            startedAt = now() - elapsedMs
             status = "running"
             startTicker()
             return emitUpdate()

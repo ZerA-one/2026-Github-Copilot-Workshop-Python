@@ -50,6 +50,18 @@
         const toggleButtonElement = rootElement.querySelector("#toggle-timer-button")
         const resetButtonElement = rootElement.querySelector("#reset-timer-button")
         const progressIndicatorElement = rootElement.querySelector("#progress-indicator")
+
+        if (
+            !currentModeElement ||
+            !timerDisplayElement ||
+            !timerStatusElement ||
+            !toggleButtonElement ||
+            !resetButtonElement ||
+            !progressIndicatorElement
+        ) {
+            return null
+        }
+
         const radius = Number(progressIndicatorElement.getAttribute("r"))
         const circumference = 2 * Math.PI * radius
 
