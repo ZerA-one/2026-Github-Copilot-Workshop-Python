@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Protocol
 
 from domain.pomodoro_rules import build_initial_state, update_daily_stats
@@ -13,14 +13,14 @@ from services.settings_service import SettingsService
 class Clock(Protocol):
     def now(self) -> datetime: ...
 
-    def today(self) -> object: ...
+    def today(self) -> date: ...
 
 
 class SystemClock:
     def now(self) -> datetime:
         return datetime.now()
 
-    def today(self) -> object:
+    def today(self) -> date:
         return self.now().date()
 
 

@@ -81,7 +81,7 @@ def test_settings_api_rejects_invalid_payload(client) -> None:
 	)
 
 	assert response.status_code == 400
-	assert response.get_json()["error"] == "work_minutes must be a positive integer."
+	assert response.get_json()["error"] == "Invalid settings payload."
 
 
 def test_session_complete_api_updates_today_stats(client) -> None:
@@ -109,7 +109,7 @@ def test_session_complete_api_rejects_invalid_duration(client) -> None:
 	response = client.post("/api/session/complete", json={"duration_seconds": -1})
 
 	assert response.status_code == 400
-	assert response.get_json()["error"] == "duration_seconds must be a positive integer."
+	assert response.get_json()["error"] == "Invalid session payload."
 
 
 def test_session_reset_api_resets_today_stats(client) -> None:

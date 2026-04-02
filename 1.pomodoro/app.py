@@ -51,8 +51,8 @@ def create_app(
 
         try:
             updated_settings = settings_service.update_settings(payload)
-        except SettingsValidationError as exc:
-            return jsonify({"error": str(exc)}), 400
+        except SettingsValidationError:
+            return jsonify({"error": "Invalid settings payload."}), 400
 
         return jsonify({"success": True, "settings": updated_settings})
 
@@ -70,8 +70,8 @@ def create_app(
                 duration_seconds=payload.get("duration_seconds"),
                 session_type=str(payload.get("session_type", "work")),
             )
-        except ValueError as exc:
-            return jsonify({"error": str(exc)}), 400
+        except ValueError:
+            return jsonify({"error": "Invalid session payload."}), 400
 
         return jsonify({"success": True, "updated_stats": updated_stats})
 
