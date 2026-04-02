@@ -49,3 +49,99 @@ h1 {
     line-height: 1.7;
     color: #53566d;
 }
+
+.mode-badge {
+    width: fit-content;
+    margin: 28px auto 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: #efeefe;
+    color: #5348be;
+    font-weight: 700;
+}
+
+.timer-value {
+    margin: 20px 0 8px;
+    text-align: center;
+    font-size: clamp(3rem, 10vw, 4.5rem);
+    font-weight: 700;
+    color: #2f3142;
+}
+
+.status-message {
+    margin: 0;
+    text-align: center;
+    color: #53566d;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.button-row button {
+    flex: 1;
+    border: 0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.button-row button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.primary-button {
+    background: #6c63d9;
+    color: #fff;
+}
+
+.secondary-button {
+    background: #ecebfb;
+    color: #473daa;
+}
+
+.stats-card {
+    margin-top: 28px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #f6f7fb;
+}
+
+.stats-card h2 {
+    margin: 0 0 16px;
+    font-size: 1rem;
+}
+
+.stats-list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+}
+
+.stats-list div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.stats-list dt {
+    color: #53566d;
+}
+
+.stats-list dd {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.error-message {
+    margin: 16px 0 0;
+    color: #bf2d52;
+    font-weight: 700;
+}
