@@ -27,6 +27,11 @@ def test_index_route_returns_successful_html_response() -> None:
 
 	assert response.status_code == 200
 	assert "ポモドーロタイマー" in body
-	assert "Step 1" in body
+	assert "現在のモード" in body
+	assert "25:00" in body
+	assert "開始" in body
+	assert "リセット" in body
+	assert "今日の進捗" in body
+	assert 'id="pomodoro-app"' in body
 	assert "static/css/style.css" in body
 	assert "static/js/timer-engine.js" in body

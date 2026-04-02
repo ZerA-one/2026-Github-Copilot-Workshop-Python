@@ -12,6 +12,7 @@
 body {
     margin: 0;
     min-height: 100vh;
+    color: #2f3142;
 }
 
 .page-shell {
@@ -22,7 +23,7 @@ body {
 }
 
 .card {
-    width: min(100%, 480px);
+    width: min(100%, 520px);
     padding: 32px;
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.96);
@@ -48,4 +49,163 @@ h1 {
     font-size: 1rem;
     line-height: 1.7;
     color: #53566d;
+}
+
+.hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.pomodoro-app {
+    display: grid;
+    gap: 28px;
+}
+
+.timer-panel,
+.stats-card {
+    padding: 24px;
+    border-radius: 20px;
+    background: #f7f7ff;
+}
+
+.section-label,
+.stats-card h2 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #6b6f86;
+}
+
+.current-mode {
+    margin: 8px 0 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.timer-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    margin: 24px 0;
+}
+
+.progress-ring {
+    width: min(100%, 280px);
+    height: auto;
+    transform: rotate(-90deg);
+}
+
+.progress-ring__track,
+.progress-ring__indicator {
+    fill: none;
+    stroke-width: 14;
+}
+
+.progress-ring__track {
+    stroke: rgba(108, 99, 217, 0.12);
+}
+
+.progress-ring__indicator {
+    stroke: #6c63d9;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.15s linear;
+}
+
+.timer-readout {
+    position: absolute;
+    display: grid;
+    gap: 8px;
+    text-align: center;
+}
+
+.timer-display {
+    margin: 0;
+    font-size: clamp(3rem, 10vw, 4rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+}
+
+.timer-status {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #6b6f86;
+}
+
+.timer-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.button {
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(91, 80, 191, 0.18);
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+.button--primary {
+    color: #ffffff;
+    background: linear-gradient(135deg, #6c63d9 0%, #5b50bf 100%);
+}
+
+.button--secondary {
+    color: #474b67;
+    background: #e8e9fb;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 16px 0 0;
+}
+
+.stat-item {
+    padding: 16px;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.stat-item dt {
+    font-size: 0.85rem;
+    color: #6b6f86;
+}
+
+.stat-item dd {
+    margin: 8px 0 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+@media (max-width: 560px) {
+    .card {
+        padding: 24px;
+    }
+
+    .timer-panel,
+    .stats-card {
+        padding: 20px;
+    }
+
+    .timer-actions,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 }
