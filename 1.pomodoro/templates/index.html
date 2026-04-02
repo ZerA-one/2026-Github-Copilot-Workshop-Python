@@ -9,9 +9,34 @@
 <body>
     <main class="page-shell">
         <section class="card">
-            <p class="eyebrow">Step 1</p>
+            <p class="eyebrow">Flask API Connected</p>
             <h1>ポモドーロタイマー</h1>
-            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+            <p class="lead">初期表示と今日の進捗は Flask API の応答を基準に更新します。</p>
+
+            <p class="mode-badge" data-role="mode-label">作業</p>
+            <p class="timer-value" data-role="timer-value">25:00</p>
+            <p class="status-message" data-role="status-message">読み込み中です…</p>
+
+            <div class="button-row">
+                <button id="start-button" class="primary-button" type="button">開始</button>
+                <button id="reset-button" class="secondary-button" type="button">リセット</button>
+            </div>
+
+            <section class="stats-card" aria-labelledby="today-progress-heading">
+                <h2 id="today-progress-heading">今日の進捗</h2>
+                <dl class="stats-list">
+                    <div>
+                        <dt>完了セッション</dt>
+                        <dd id="completed-count" data-role="completed-count">0</dd>
+                    </div>
+                    <div>
+                        <dt>集中時間</dt>
+                        <dd id="focused-minutes" data-role="focused-minutes">0 分</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <p id="app-error" class="error-message" role="alert" aria-live="assertive" hidden></p>
         </section>
     </main>
 
