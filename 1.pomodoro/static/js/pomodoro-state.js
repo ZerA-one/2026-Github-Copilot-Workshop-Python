@@ -50,7 +50,7 @@
         }
 
         const mode = VALID_MODES.has(candidate.mode) ? candidate.mode : "work";
-        const durationSeconds = toNonNegativeInteger(candidate.durationSeconds, getDefaultDuration(mode)) || getDefaultDuration(mode);
+        const durationSeconds = toNonNegativeInteger(candidate.durationSeconds, getDefaultDuration(mode));
         const remainingSeconds = Math.min(
             toNonNegativeInteger(candidate.remainingSeconds, durationSeconds),
             durationSeconds
