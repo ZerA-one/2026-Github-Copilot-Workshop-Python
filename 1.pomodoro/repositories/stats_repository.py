@@ -114,7 +114,7 @@ class JsonStatsRepository:
 
     def _write_data(self, data: dict[str, Any]) -> None:
         self._file_path.parent.mkdir(parents=True, exist_ok=True)
-        temp_path = self._file_path.with_suffix(f"{self._file_path.suffix}.tmp")
+        temp_path = self._file_path.with_name(f"{self._file_path.name}.tmp")
 
         with temp_path.open("w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
