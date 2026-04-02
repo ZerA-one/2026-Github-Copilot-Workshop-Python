@@ -1,0 +1,1 @@
+// Step 4 で画面状態と localStorage 復元を実装する。

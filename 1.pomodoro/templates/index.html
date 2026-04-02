@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポモドーロタイマー</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="card">
+            <p class="eyebrow">Step 1</p>
+            <h1>ポモドーロタイマー</h1>
+            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/timer-engine.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pomodoro-state.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pomodoro-ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pomodoro-api.js') }}"></script>
+</body>
+</html>

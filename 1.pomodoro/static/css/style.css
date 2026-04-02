@@ -1,0 +1,51 @@
+:root {
+    color-scheme: light;
+    font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
+    background: linear-gradient(160deg, #6c63d9 0%, #5b50bf 100%);
+    color: #2f3142;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+.page-shell {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 24px;
+}
+
+.card {
+    width: min(100%, 480px);
+    padding: 32px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 24px 60px rgba(44, 29, 112, 0.22);
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6c63d9;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.lead {
+    margin: 16px 0 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #53566d;
+}
