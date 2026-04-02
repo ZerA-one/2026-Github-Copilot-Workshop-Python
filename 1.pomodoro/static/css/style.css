@@ -158,7 +158,7 @@ button {
     border: 2px solid var(--accent);
     font-size: 1.625rem;
     font-weight: 700;
-    cursor: default;
+    cursor: pointer;
 }
 
 .button--primary {
@@ -193,6 +193,7 @@ button {
 }
 
 .stat-item {
+    margin: 0;
     text-align: center;
 }
 
