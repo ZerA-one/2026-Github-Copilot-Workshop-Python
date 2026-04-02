@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, Response, jsonify, render_template, request
 
 from domain.pomodoro_rules import SettingsValidationError, build_initial_timer_state
 from repositories.settings_repository import InMemorySettingsRepository
@@ -27,7 +27,7 @@ def create_app() -> Flask:
         return render_template("index.html")
 
     @app.get("/api/state")
-    def get_state():
+    def get_state() -> Response:
         settings = settings_service.get_settings()
         return jsonify(
             {
@@ -37,12 +37,12 @@ def create_app() -> Flask:
         )
 
     @app.get("/api/settings")
-    def get_settings():
+    def get_settings() -> Response:
         settings = settings_service.get_settings()
         return jsonify({"settings": settings.to_dict()})
 
     @app.post("/api/settings")
-    def update_settings():
+    def update_settings() -> Response | tuple[Response, int]:
         payload = request.get_json(silent=True) or {}
 
         try:
