@@ -8,10 +8,56 @@
 </head>
 <body>
     <main class="page-shell">
-        <section class="card">
-            <p class="eyebrow">Step 1</p>
-            <h1>ポモドーロタイマー</h1>
-            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+        <section class="card pomodoro-app" id="pomodoro-app" data-work-duration-seconds="1500">
+            <p class="eyebrow">Focus Session</p>
+            <header class="hero">
+                <div>
+                    <h1>ポモドーロタイマー</h1>
+                    <p class="lead">開始・一時停止・再開・リセットをブラウザだけで試せる MVP です。</p>
+                </div>
+            </header>
+
+            <section class="timer-panel" aria-label="タイマー">
+                <p class="section-label">現在のモード</p>
+                <p class="current-mode" id="current-mode">作業</p>
+
+                <div class="timer-visual">
+                    <svg class="progress-ring" viewBox="0 0 220 220" aria-hidden="true">
+                        <circle class="progress-ring__track" cx="110" cy="110" r="92"></circle>
+                        <circle
+                            class="progress-ring__indicator"
+                            id="progress-indicator"
+                            cx="110"
+                            cy="110"
+                            r="92"
+                        ></circle>
+                    </svg>
+
+                    <div class="timer-readout">
+                        <p class="timer-display" id="timer-display" aria-live="polite">25:00</p>
+                        <p class="timer-status" id="timer-status">開始するとタイマーが進行します</p>
+                    </div>
+                </div>
+
+                <div class="timer-actions">
+                    <button class="button button--primary" id="toggle-timer-button" type="button">開始</button>
+                    <button class="button button--secondary" id="reset-timer-button" type="button" disabled>リセット</button>
+                </div>
+            </section>
+
+            <section class="stats-card" aria-label="今日の進捗">
+                <h2>今日の進捗</h2>
+                <dl class="stats-grid">
+                    <div class="stat-item">
+                        <dt>完了数</dt>
+                        <dd>0 セッション</dd>
+                    </div>
+                    <div class="stat-item">
+                        <dt>集中時間</dt>
+                        <dd>0 分</dd>
+                    </div>
+                </dl>
+            </section>
         </section>
     </main>
 
