@@ -7,9 +7,12 @@
 
         restore(snapshot = {}) {
             this.mode = snapshot.mode || this.mode || "work"
-            this.status = snapshot.status || snapshot.timerStatus || "idle"
-            this.durationSeconds = Math.max(1, Number(snapshot.durationSeconds || snapshot.duration_seconds || this.durationSeconds || 1500))
-            this.remainingSeconds = Math.max(0, Number(snapshot.remainingSeconds || snapshot.remaining_seconds || this.durationSeconds))
+            this.status = snapshot.status || "idle"
+            const durationSeconds = snapshot.durationSeconds ?? snapshot.duration_seconds ?? this.durationSeconds ?? 1500
+            const remainingSeconds = snapshot.remainingSeconds ?? snapshot.remaining_seconds ?? durationSeconds
+
+            this.durationSeconds = Math.max(1, Number(durationSeconds))
+            this.remainingSeconds = Math.max(0, Number(remainingSeconds))
             this.endTimestamp = snapshot.endTimestamp ?? snapshot.end_timestamp ?? null
             return this.getSnapshot()
         }

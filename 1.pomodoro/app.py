@@ -51,8 +51,8 @@ def create_app(
     def update_settings():
         try:
             settings = settings_service.update_settings(request.get_json(silent=True))
-        except ValueError as error:
-            return api_error(str(error), 400)
+        except ValueError:
+            return api_error("入力内容を確認してください。", 400)
         return api_success({"settings": settings})
 
     @app.post("/api/session/complete")
@@ -63,8 +63,8 @@ def create_app(
 
         try:
             result = stats_service.complete_session(mode, duration_seconds)
-        except ValueError as error:
-            return api_error(str(error), 400)
+        except ValueError:
+            return api_error("入力内容を確認してください。", 400)
 
         return api_success(result)
 

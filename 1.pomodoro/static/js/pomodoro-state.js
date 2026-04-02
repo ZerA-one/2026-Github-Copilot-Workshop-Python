@@ -17,7 +17,7 @@
     })
 
     function normalizeInteger(value, fallback, min = 0) {
-        const parsed = Number.parseInt(value, 10)
+        const parsed = parseInt(value, 10)
         if (Number.isNaN(parsed)) {
             return fallback
         }
@@ -74,8 +74,9 @@
         let timerStatus = VALID_STATUSES.has(candidate.timer_status)
             ? candidate.timer_status
             : "idle"
-        let endTimestamp = Number.isFinite(Number(candidate.end_timestamp))
-            ? Number(candidate.end_timestamp)
+        const parsedEndTimestamp = Number(candidate.end_timestamp)
+        let endTimestamp = Number.isFinite(parsedEndTimestamp)
+            ? parsedEndTimestamp
             : null
 
         if (timerStatus === "running" && endTimestamp) {

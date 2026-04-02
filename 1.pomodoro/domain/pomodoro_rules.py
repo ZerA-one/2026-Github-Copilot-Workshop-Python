@@ -4,14 +4,14 @@ from copy import deepcopy
 from typing import Mapping
 
 
-DEFAULT_SETTINGS = {
+DEFAULT_SETTINGS: dict[str, int] = {
     "work_minutes": 25,
     "short_break_minutes": 5,
     "long_break_minutes": 15,
     "cycles_before_long_break": 4,
 }
 
-DEFAULT_STATS = {
+DEFAULT_STATS: dict[str, int] = {
     "completed_count": 0,
     "focused_seconds": 0,
 }
@@ -29,7 +29,9 @@ def normalize_settings(settings: Mapping[str, object] | None = None) -> dict[str
 
     for key, value in normalized.items():
         if value <= 0:
-            raise ValueError(f"{key} は 1 以上の整数で指定してください。")
+            raise ValueError(
+                f"{key} は 1 以上の整数で指定してください（現在の値: {value}）",
+            )
 
     return normalized
 

@@ -90,4 +90,4 @@ def test_api_settings_validation_returns_bad_request() -> None:
 
     assert response.status_code == 400
     assert payload["ok"] is False
-    assert "work_minutes" in payload["error"]
+    assert payload["error"] == "入力内容を確認してください。"

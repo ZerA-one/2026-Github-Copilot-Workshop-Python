@@ -43,7 +43,8 @@
 
         _commit(state) {
             const last = this.renderedState
-            const modeLabel = window.PomodoroState.MODE_LABELS[state.mode] || "作業中"
+            const modeLabel = window.PomodoroState.MODE_LABELS[state.mode]
+                || window.PomodoroState.MODE_LABELS.work
             const timerText = formatTime(state.remaining_seconds)
             const statusText = state.loading ? "読み込み中..." : state.status_message
             const primaryLabel = getPrimaryLabel(state.timer_status)
@@ -148,7 +149,7 @@
         const api = new window.PomodoroApiClient()
         const engine = new window.PomodoroTimer()
         let timerId = null
-        let handlingCompletion = false
+        let completionPromise = null
 
         function syncEngineFromState(state) {
             engine.restore({
@@ -179,71 +180,75 @@
         }
 
         async function handleCompletion() {
-            if (handlingCompletion) {
+            if (completionPromise) {
+                await completionPromise
                 return
             }
 
-            handlingCompletion = true
-            const state = store.getState()
-            replaceState({
-                ...state,
-                loading: true,
-                status_message: "セッションを保存中...",
-            })
-
-            try {
-                const result = await api.completeSession({
-                    mode: state.mode,
-                    duration_seconds: state.duration_seconds,
-                })
-
+            completionPromise = (async () => {
+                const state = store.getState()
                 replaceState({
-                    ...store.getState(),
-                    ...result.next_state,
-                    completed_count: result.today_stats.completed_count,
-                    focused_seconds: result.today_stats.focused_seconds,
-                    loading: false,
-                    error_message: "",
-                    end_timestamp: null,
-                    status_message: "次のセッションを準備しました",
+                    ...state,
+                    loading: true,
+                    status_message: "セッションを保存中...",
                 })
-            } catch (error) {
-                const latestState = store.getState()
-                const fallbackStats = latestState.mode === "work"
-                    ? {
-                        completed_count: latestState.completed_count + 1,
-                        focused_seconds: latestState.focused_seconds + latestState.duration_seconds,
-                    }
-                    : {
-                        completed_count: latestState.completed_count,
-                        focused_seconds: latestState.focused_seconds,
-                    }
-                const nextMode = window.PomodoroState.getNextMode(
-                    latestState.mode,
-                    fallbackStats.completed_count,
-                    latestState.settings,
-                )
-                const nextDuration = window.PomodoroState.getDurationSeconds(
-                    nextMode,
-                    latestState.settings,
-                )
 
-                replaceState({
-                    ...latestState,
-                    mode: nextMode,
-                    timer_status: "idle",
-                    duration_seconds: nextDuration,
-                    remaining_seconds: nextDuration,
-                    end_timestamp: null,
-                    completed_count: fallbackStats.completed_count,
-                    focused_seconds: fallbackStats.focused_seconds,
-                    loading: false,
-                    error_message: "サーバーに接続できないため、端末内の状態で次のセッションへ進みました。",
-                    status_message: "オフラインモード",
-                })
-            } finally {
-                handlingCompletion = false
-            }
+                try {
+                    const result = await api.completeSession({
+                        mode: state.mode,
+                        duration_seconds: state.duration_seconds,
+                    })
+
+                    replaceState({
+                        ...store.getState(),
+                        ...result.next_state,
+                        completed_count: result.today_stats.completed_count,
+                        focused_seconds: result.today_stats.focused_seconds,
+                        loading: false,
+                        error_message: "",
+                        end_timestamp: null,
+                        status_message: "次のセッションを準備しました",
+                    })
+                } catch (error) {
+                    const latestState = store.getState()
+                    const fallbackStats = latestState.mode === "work"
+                        ? {
+                            completed_count: latestState.completed_count + 1,
+                            focused_seconds: latestState.focused_seconds + latestState.duration_seconds,
+                        }
+                        : {
+                            completed_count: latestState.completed_count,
+                            focused_seconds: latestState.focused_seconds,
+                        }
+                    const nextMode = window.PomodoroState.getNextMode(
+                        latestState.mode,
+                        fallbackStats.completed_count,
+                        latestState.settings,
+                    )
+                    const nextDuration = window.PomodoroState.getDurationSeconds(
+                        nextMode,
+                        latestState.settings,
+                    )
+
+                    replaceState({
+                        ...latestState,
+                        mode: nextMode,
+                        timer_status: "idle",
+                        duration_seconds: nextDuration,
+                        remaining_seconds: nextDuration,
+                        end_timestamp: null,
+                        completed_count: fallbackStats.completed_count,
+                        focused_seconds: fallbackStats.focused_seconds,
+                        loading: false,
+                        error_message: "サーバーに接続できないため、端末内の状態で次のセッションへ進みました。",
+                        status_message: "オフラインモード",
+                    })
+                } finally {
+                    completionPromise = null
+                }
+            })()
+
+            await completionPromise
         }
 
         function startTicker() {
@@ -253,11 +258,13 @@
 
             timerId = window.setInterval(() => {
                 const snapshot = engine.tick()
-                updateFromSnapshot(snapshot)
                 if (snapshot.status === "finished") {
                     stopTicker()
+                    updateFromSnapshot(snapshot)
                     void handleCompletion()
+                    return
                 }
+                updateFromSnapshot(snapshot)
             }, 250)
         }
 
@@ -362,7 +369,7 @@
             startTicker()
         }
 
-        ;(async () => {
+        const loadInitialState = async () => {
             const current = store.getState()
             replaceState({
                 ...current,
@@ -373,23 +380,23 @@
             try {
                 const remoteState = await api.fetchState()
                 const latestState = store.getState()
-                const mergedState = ["running", "paused"].includes(latestState.timer_status)
-                    ? window.PomodoroState.sanitizeState({
+                const remoteMergeSource = ["running", "paused"].includes(latestState.timer_status)
+                    ? {
                         ...latestState,
                         completed_count: remoteState.completed_count,
                         focused_seconds: remoteState.focused_seconds,
                         settings: remoteState.settings,
-                        loading: false,
-                        error_message: "",
-                        status_message: "準備完了",
-                    })
-                    : window.PomodoroState.sanitizeState({
+                    }
+                    : {
                         ...latestState,
                         ...remoteState,
-                        loading: false,
-                        error_message: "",
-                        status_message: "準備完了",
-                    })
+                    }
+                const mergedState = window.PomodoroState.sanitizeState({
+                    ...remoteMergeSource,
+                    loading: false,
+                    error_message: "",
+                    status_message: "準備完了",
+                })
 
                 replaceState(mergedState)
             } catch (error) {
@@ -400,7 +407,9 @@
                     status_message: "オフラインモード",
                 })
             }
-        })()
+        }
+
+        void loadInitialState()
     }
 
     document.addEventListener("DOMContentLoaded", createController)
