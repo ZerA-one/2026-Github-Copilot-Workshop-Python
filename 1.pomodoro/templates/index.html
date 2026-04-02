@@ -8,16 +8,57 @@
 </head>
 <body>
     <main class="page-shell">
-        <section class="card">
-            <p class="eyebrow">Step 1</p>
-            <h1>ポモドーロタイマー</h1>
-            <p class="lead">Flask アプリの骨組みを作成しました。次のステップで UI とタイマー機能を追加します。</p>
+        <section class="app-card">
+            <div class="window-bar">
+                <h1>ポモドーロタイマー</h1>
+                <div class="window-actions" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <section class="timer-section" aria-label="タイマー">
+                <p class="mode-heading">現在のモード</p>
+                <p id="current-mode" class="current-mode">作業中</p>
+
+                <div class="timer-visual">
+                    <svg class="progress-ring" viewBox="0 0 280 280" aria-hidden="true">
+                        <circle class="progress-ring-track" cx="140" cy="140" r="100"></circle>
+                        <circle id="progress-ring" class="progress-ring-value" cx="140" cy="140" r="100"></circle>
+                    </svg>
+
+                    <div class="timer-readout">
+                        <p id="session-status" class="session-status">待機中</p>
+                        <p id="remaining-time" class="remaining-time">25:00</p>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="start-button" class="button button-primary" type="button">開始</button>
+                    <button id="reset-button" class="button button-secondary" type="button">リセット</button>
+                </div>
+            </section>
+
+            <section class="stats-card" aria-label="今日の進捗">
+                <h2>今日の進捗</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <p id="completed-count" class="stat-value">0</p>
+                        <p class="stat-label">完了</p>
+                    </div>
+                    <div class="stat-item">
+                        <p id="focused-time" class="stat-value">0分</p>
+                        <p class="stat-label">集中時間</p>
+                    </div>
+                </div>
+            </section>
         </section>
     </main>
 
-    <script src="{{ url_for('static', filename='js/timer-engine.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/pomodoro-state.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/pomodoro-ui.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/pomodoro-api.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/pomodoro-state.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/pomodoro-ui.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/timer-engine.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/pomodoro-api.js') }}"></script>
 </body>
 </html>
