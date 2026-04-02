@@ -4,7 +4,7 @@ from typing import Any
 from flask import Flask, jsonify, render_template, request
 
 from domain.clock import SystemClock
-from repositories.settings_repository import InMemorySettingsRepository
+from repositories.settings_repository import DEFAULT_SETTINGS, InMemorySettingsRepository
 from repositories.stats_repository import InMemoryStatsRepository
 from services.settings_service import SettingsService
 from services.stats_service import StatsService
@@ -78,7 +78,7 @@ def _coerce_settings_payload(payload: dict[str, Any]) -> dict[str, int]:
     return {
         key: _coerce_int(value, default=0)
         for key, value in payload.items()
-        if key in InMemorySettingsRepository().get_settings()
+        if key in DEFAULT_SETTINGS
     }
 
 

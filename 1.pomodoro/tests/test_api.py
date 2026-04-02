@@ -1,26 +1,17 @@
 from pathlib import Path
+from datetime import datetime
 
 from flask import Flask
 
 from app import BASE_DIR, create_app
-from domain.clock import Clock
 from repositories.settings_repository import InMemorySettingsRepository
 from repositories.stats_repository import InMemoryStatsRepository
 from services.settings_service import SettingsService
 from services.stats_service import StatsService
-
-
-class FixedClock(Clock):
-    def __init__(self, now_value) -> None:
-        self._now_value = now_value
-
-    def now(self):
-        return self._now_value
+from tests.test_helpers import FixedClock
 
 
 def create_test_client():
-    from datetime import datetime
-
     settings_service = SettingsService(InMemorySettingsRepository())
     stats_service = StatsService(
         InMemoryStatsRepository(),

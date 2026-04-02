@@ -1,18 +1,10 @@
 from datetime import datetime
 
-from domain.clock import Clock
 from repositories.settings_repository import InMemorySettingsRepository
 from repositories.stats_repository import InMemoryStatsRepository
 from services.settings_service import SettingsService
 from services.stats_service import StatsService
-
-
-class FixedClock(Clock):
-    def __init__(self, now_value: datetime) -> None:
-        self._now_value = now_value
-
-    def now(self) -> datetime:
-        return self._now_value
+from tests.test_helpers import FixedClock
 
 
 def test_stats_service_completes_work_session_and_updates_stats() -> None:
